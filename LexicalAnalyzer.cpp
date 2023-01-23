@@ -15,10 +15,7 @@ bool isPunctuator(char ch)					//check if the given character is a punctuator or
 
 bool validIdentifier(char* str)						//check if the given identifier is valid or not
 {
-    if (str[0] == '0' || str[0] == '1' || str[0] == '2' ||
-        str[0] == '3' || str[0] == '4' || str[0] == '5' ||
-        str[0] == '6' || str[0] == '7' || str[0] == '8' ||
-        str[0] == '9' || isPunctuator(str[0]) == true)
+    if (isdigit(str[0]) || isPunctuator(str[0]) == true)
         {
             return false;
         }									//if first character of string is a digit or a special character, identifier is not valid
@@ -87,10 +84,7 @@ bool isNumber(char* str)							//check if the given substring is a number or not
         {
             numOfDecimal++;
         }
-        if (str[i] != '0' && str[i] != '1' && str[i] != '2'
-            && str[i] != '3' && str[i] != '4' && str[i] != '5'
-            && str[i] != '6' && str[i] != '7' && str[i] != '8'
-            && str[i] != '9' || (str[i] == '-' && i > 0))
+        if (!isdigit(str[i]) || (str[i] == '-' && i > 0))
             {
                 return false;
             }
@@ -127,7 +121,7 @@ void parse(char* str)						//parse the expression
             {
             if (isOperator(str[right]) == true)
             {
-                std::cout<< str[right] <<" IS AN OPERATOR\n";
+                cout<< str[right] <<" : OPERATOR\n";
             }
             right++;
             left = right;
@@ -138,21 +132,21 @@ void parse(char* str)						//parse the expression
 
             if (isKeyword(sub) == true)
                         {
-                            cout<< sub <<" IS A KEYWORD\n";
+                            cout<< sub <<" : KEYWORD\n";
                         }
             else if (isNumber(sub) == true)
                         {
-                            cout<< sub <<" IS A NUMBER\n";
+                            cout<< sub <<" : NUMBER\n";
                         }
             else if (validIdentifier(sub) == true
                      && isPunctuator(str[right - 1]) == false)
                      {
-                         cout<< sub <<" IS A VALID IDENTIFIER\n";
+                         cout<< sub <<" : VALID IDENTIFIER\n";
                      }
             else if (validIdentifier(sub) == false
                      && isPunctuator(str[right - 1]) == false)
                      {
-                         cout<< sub <<" IS NOT A VALID IDENTIFIER\n";
+                         cout<< sub <<" : INVALID IDENTIFIER\n";
                      }
 
             left = right;
@@ -163,7 +157,7 @@ void parse(char* str)						//parse the expression
 
 int main()
 {
-    char c[100] = "int m = n + 3p";
+    char c[100] = "int m = n + 3p * 4";
     parse(c);
     return 0;
 }
